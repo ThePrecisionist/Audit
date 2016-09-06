@@ -1,3 +1,3 @@
 # Audit
 
-Different options to get Network share permissions
+Different options to get Windows Network Share permissions using PowerShell
