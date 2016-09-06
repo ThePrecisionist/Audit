@@ -2,7 +2,9 @@ function Get-SharePermission {
     Param($ComputerName = $env:ComputerName)
     $ShareData = @{}; $Shares = @()
     Try {
+        #Calling Win32_Share to get the names of all the shares that exist
         Get-WMIObject win32_Share -ComputerName $ComputerName -ErrorAction Stop | Foreach {$ShareData += @{$_.Name= @{'Path'=$_.Path;'Description'=$_.Description}}}
+        #Calling Win32_LogicalShareSecuritySetting. This only returns shares that have explicitly defined ACLs
         $ShareSecurity = Get-WMIObject win32_LogicalShareSecuritySetting -comp $ComputerName
         foreach($Share in $ShareSecurity) {
             $ShareName = $Share.Name
